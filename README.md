@@ -1,10 +1,8 @@
-# BDAL Final Project
+# Big Data Analytics Final Project
 
-## Big Data Analytics Using HDFS, MapReduce and Apache Pig
+## YouTube Video Data Analysis using Hadoop HDFS, MapReduce and Apache Pig
 
-This project demonstrates a complete Big Data Analytics workflow on a large YouTube video dataset using **HDFS**, **Hadoop MapReduce**, and **Apache Pig**.
-
-The project focuses on analyzing video categories, total views, and average ratings and comparing the results obtained from MapReduce and Pig.
+A Big Data Analytics project that processes and analyzes **749,361 YouTube video records** using **Hadoop HDFS, Java MapReduce, and Apache Pig**. The project performs category-level analysis of video count, total views, and average ratings, and compares the results produced by MapReduce and Pig.
 
 ---
 
@@ -12,55 +10,83 @@ The project focuses on analyzing video categories, total views, and average rati
 
 The main objectives of this project are:
 
-1. Store a large dataset in HDFS.
-2. Verify HDFS storage, blocks, replication, and data integrity.
-3. Perform category-based analysis using Hadoop MapReduce.
-4. Perform the same analysis using Apache Pig.
-5. Compare the results of MapReduce and Pig.
-6. Present the analytical results using visualizations.
+- Store a large YouTube dataset in **Hadoop Distributed File System (HDFS)**.
+- Demonstrate distributed data storage and block management.
+- Process the dataset using **Java MapReduce**.
+- Perform equivalent analysis using **Apache Pig**.
+- Compare MapReduce and Pig results.
+- Generate clear visualizations for the analytical results.
+- Demonstrate a complete Big Data processing workflow from raw data to insights.
 
 ---
 
 ## 2. Dataset
 
-The dataset contains YouTube video information with fields such as:
+The dataset contains **749,361 YouTube video records** distributed across five input files.
 
-- `video_id`
-- `uploader`
-- `age`
-- `category`
-- `length`
-- `views`
-- `rate`
-- `ratings`
-- `comments`
-- Related video IDs
+### Main attributes
 
-### Dataset Summary
+| Field | Description |
+|---|---|
+| `video_id` | Unique video identifier |
+| `uploader` | Video uploader |
+| `age` | Age-related dataset field |
+| `category` | YouTube video category |
+| `length` | Video length |
+| `views` | Number of views |
+| `rate` | Average video rating |
+| `ratings` | Number of ratings |
+| `comments` | Number of comments |
+| Related IDs | Related YouTube video identifiers |
 
-| Item | Value |
-|---|---:|
-| Total records | 749,361 |
-| Input files | 5 |
-| HDFS blocks | 6 |
-| HDFS replication factor | 1 |
-| DataNode | 1 |
-| Categories with names | 13 |
-| Empty category records | 5,792 |
-
-The raw dataset is intentionally **not included in this GitHub repository** because of its size.
+The raw dataset is **not included in this repository** because of its large size.
 
 ---
 
-## 3. Technologies Used
+## 3. System Architecture / Workflow
 
-- **Hadoop 3.2.4**
-- **HDFS**
-- **Hadoop MapReduce**
-- **Apache Pig 0.18.0**
-- **Java 8**
-- **Windows CMD**
-- **Git & GitHub**
+```text
+                 YouTube Dataset
+                       |
+                       v
+              +------------------+
+              |       HDFS       |
+              | Distributed Data |
+              |     Storage      |
+              +------------------+
+                       |
+             +---------+---------+
+             |                   |
+             v                   v
+      +-------------+     +-------------+
+      |  MapReduce  |     |     Pig     |
+      | Java Jobs   |     |  Scripts    |
+      +-------------+     +-------------+
+             |                   |
+             +---------+---------+
+                       |
+                       v
+              +------------------+
+              | Aggregated       |
+              | Analytical       |
+              | Results          |
+              +------------------+
+                       |
+                       v
+              +------------------+
+              | Visualizations   |
+              +------------------+
+```
+
+### Processing Flow
+
+1. The YouTube dataset is stored locally.
+2. Dataset files are uploaded to HDFS.
+3. HDFS divides the data into blocks and manages distributed storage.
+4. MapReduce performs category-based analytical operations.
+5. Apache Pig performs equivalent analytical operations.
+6. Results from both approaches are compared.
+7. The final results are presented using visualizations.
 
 ---
 
@@ -72,41 +98,119 @@ The dataset was uploaded to:
 /bda_final_project/input
 ```
 
-The HDFS structure is:
+The HDFS verification showed:
+
+- **749,361 input records**
+- **6 HDFS blocks**
+- **Replication factor: 1**
+- **0 missing blocks**
+- **0 corrupt blocks**
+- **0 under-replicated blocks**
+
+HDFS command evidence is available in:
 
 ```text
-/bda_final_project
-├── input
-│   ├── 0.txt
-│   ├── 1.txt
-│   ├── 2.txt
-│   ├── 3.txt
-│   └── 4.txt
-└── output
+hdfs/commands.txt
 ```
 
-HDFS verification confirmed:
+Screenshots are available in:
 
-- 6 total blocks
-- Replication factor = 1
-- Missing blocks = 0
-- Corrupt blocks = 0
-- Under-replicated blocks = 0
-- HDFS input record count = **749,361**
-
-Detailed HDFS commands are available in [`hdfs/commands.txt`](hdfs/commands.txt).
+```text
+screenshots/hdfs/
+```
 
 ---
 
 ## 5. MapReduce Analysis
 
-Three MapReduce programs were implemented.
+Three Java MapReduce programs were implemented.
 
-### 5.1 Category Count
+### 5.1 Category Video Count
 
-`CategoryCount.java` counts the number of videos in each category.
+Counts the number of videos in each category.
 
-Main result:
+**Highest category:** Music — **179,049 videos**
+
+### 5.2 Category Total Views
+
+Calculates the total number of views for each category.
+
+**Highest category:** Music — **2,426,199,511 views**
+
+### 5.3 Category Average Rating
+
+Calculates the average rating for each category.
+
+**Highest category:** Film & Animation — **approximately 4.08**
+
+### MapReduce Source Files
+
+```text
+mapreduce/src/
+├── CategoryCount.java
+├── CategoryTotalViews.java
+└── CategoryAverageRating.java
+```
+
+Compiled JAR files are also included in the `mapreduce/` directory.
+
+MapReduce result screenshots:
+
+```text
+screenshots/mapreduce/
+```
+
+---
+
+## 6. Apache Pig Analysis
+
+The same analytical tasks were implemented using Apache Pig.
+
+### Pig Scripts
+
+```text
+pig/
+├── load_data.pig
+├── count_data.pig
+├── category_count.pig
+├── category_total_views.pig
+└── category_average_rating.pig
+```
+
+The Pig implementation performs:
+
+- Total record counting
+- Category-wise video counting
+- Category-wise total view calculation
+- Category-wise average rating calculation
+
+Pig result screenshots are available in:
+
+```text
+screenshots/pig/
+```
+
+---
+
+## 7. MapReduce vs Apache Pig
+
+| Feature | MapReduce | Apache Pig |
+|---|---|---|
+| Programming style | Java programming | Pig Latin |
+| Complexity | More code and logic required | Simpler and shorter |
+| Data processing | Mapper and Reducer | Pig relational operators |
+| Development speed | Comparatively slower | Faster |
+| Flexibility | High | High for data-flow analysis |
+| Ease of use | More difficult | Easier |
+| Result | Same analytical results | Same analytical results |
+
+For this project, **Pig required less code for the analytical queries**, while MapReduce provided more explicit control over the mapper and reducer processing logic.
+
+---
+
+## 8. Results and Key Findings
+
+### Video Count
 
 | Category | Video Count |
 |---|---:|
@@ -115,121 +219,61 @@ Main result:
 | Comedy | 87,818 |
 | Film & Animation | 73,293 |
 | Sports | 67,329 |
-| Gadgets & Games | 59,817 |
-| People & Blogs | 48,890 |
-| News & Politics | 35,925 |
-| Howto & DIY | 18,257 |
-| Travel & Places | 14,675 |
-| Autos & Vehicles | 14,284 |
-| Pets & Animals | 10,496 |
-| UNA | 6,062 |
 
-The dataset also contains **5,792 records with an empty category**.
+**Finding:** Music contains the largest number of videos in the dataset.
 
-### 5.2 Total Views by Category
-
-`CategoryTotalViews.java` calculates the total number of views for each category.
+### Total Views
 
 | Category | Total Views |
 |---|---:|
 | Music | 2,426,199,511 |
 | Entertainment | 1,644,510,629 |
 | Comedy | 1,603,337,065 |
-| Film & Animation | 659,449,540 |
-| Sports | 647,412,772 |
-| People & Blogs | 425,607,955 |
-| Gadgets & Games | 505,658,305 |
-| News & Politics | 310,502,116 |
-| Howto & DIY | 252,583,445 |
-| UNA | 254,936,053 |
 | Autos & Vehicles | 131,705,784 |
-| Pets & Animals | 118,786,665 |
-| Travel & Places | 57,748,080 |
+| Sports | 647,412,772 |
 
-**Music** has the highest total views.
+**Finding:** Music has the highest total number of views.
 
-### 5.3 Average Rating by Category
-
-`CategoryAverageRating.java` calculates the average video rating for each category.
+### Average Rating
 
 | Category | Average Rating |
 |---|---:|
 | Film & Animation | 4.0777 |
-| Music | 3.9583 |
-| UNA | 3.9459 |
 | Entertainment | 3.7990 |
 | Gadgets & Games | 3.7384 |
 | Sports | 3.5107 |
-| News & Politics | 3.4930 |
-| Howto & DIY | 3.4060 |
-| Comedy | 3.3996 |
-| Autos & Vehicles | 3.1326 |
-| People & Blogs | 3.0029 |
-| Pets & Animals | 2.9414 |
-| Travel & Places | 2.6898 |
+| Music | 3.9583 |
 
-**Film & Animation** has the highest average rating.
+**Finding:** Film & Animation has the highest average rating at approximately **4.08**.
 
 ---
 
-## 6. Apache Pig Analysis
+## 9. Visualizations
 
-The same dataset was analyzed using Apache Pig.
+The project includes three result visualizations:
 
-Pig scripts:
+### Category-wise Video Count
 
-- [`load_data.pig`](pig/load_data.pig)
-- [`count_data.pig`](pig/count_data.pig)
-- [`category_count.pig`](pig/category_count.pig)
-- [`category_total_views.pig`](pig/category_total_views.pig)
-- [`category_average_rating.pig`](pig/category_average_rating.pig)
+![Category Video Count](screenshots/visualizations/category_video_count.png)
 
-The Pig results matched the MapReduce results for the corresponding analyses.
+### Category-wise Total Views
 
-The total record count produced by Pig was:
+![Category Total Views](screenshots/visualizations/category_total_views.png)
 
-```text
-749361
-```
+### Category-wise Average Rating
+
+![Category Average Rating](screenshots/visualizations/category_average_rating.png)
 
 ---
 
-## 7. Result Visualizations
-
-### Video Count by Category
-
-![Video Count by Category](screenshots/visualizations/category_video_count.png)
-
-### Total Views by Category
-
-![Total Views by Category](screenshots/visualizations/category_total_views.png)
-
-### Average Rating by Category
-
-![Average Rating by Category](screenshots/visualizations/category_average_rating.png)
-
----
-
-## 8. MapReduce and Pig Comparison
-
-| Analysis | MapReduce | Pig |
-|---|---|---|
-| Total record count | 749,361 | 749,361 |
-| Category count | Completed | Completed |
-| Total views by category | Completed | Completed |
-| Average rating by category | Completed | Completed |
-| Result consistency | Matches Pig | Matches MapReduce |
-
-This confirms that both approaches produced consistent analytical results on the dataset.
-
----
-
-## 9. Repository Structure
+## 10. Project Structure
 
 ```text
 BDAL_Final_Project/
+│
 ├── hdfs/
 │   └── commands.txt
+│
 ├── mapreduce/
 │   ├── src/
 │   │   ├── CategoryCount.java
@@ -238,13 +282,20 @@ BDAL_Final_Project/
 │   ├── CategoryCount.jar
 │   ├── CategoryTotalViews.jar
 │   └── CategoryAverageRating.jar
+│
 ├── pig/
 │   ├── load_data.pig
 │   ├── count_data.pig
 │   ├── category_count.pig
 │   ├── category_total_views.pig
 │   └── category_average_rating.pig
+│
 ├── screenshots/
+│   ├── hdfs/
+│   ├── mapreduce/
+│   ├── pig/
+│   └── visualizations/
+│
 ├── docs/
 ├── .gitignore
 └── README.md
@@ -252,30 +303,90 @@ BDAL_Final_Project/
 
 ---
 
-## 10. Key Findings
+## 11. How to Run
 
-- **Music** contains the largest number of videos: **179,049**.
-- **Music** also has the highest total views: **2,426,199,511**.
-- **Film & Animation** has the highest average rating: approximately **4.08**.
-- The HDFS dataset contains **749,361 records**.
-- HDFS verification found no missing or corrupt blocks.
-- MapReduce and Pig produced consistent results.
+### Start Hadoop
+
+Make sure Hadoop HDFS and YARN services are running.
+
+Verify with:
+
+```bash
+jps
+```
+
+### Create the HDFS input directory
+
+```bash
+hdfs dfs -mkdir -p /bda_final_project/input
+```
+
+### Upload dataset
+
+```bash
+hdfs dfs -put <dataset-files> /bda_final_project/input/
+```
+
+### Verify HDFS
+
+```bash
+hdfs dfs -ls /bda_final_project/input
+hdfs fsck /bda_final_project/input -files -blocks -locations
+```
+
+### Run MapReduce
+
+Example:
+
+```bash
+hadoop jar CategoryCount.jar CategoryCount /bda_final_project/input /bda_final_project/output
+```
+
+The other MapReduce JARs can be executed similarly with different output directories.
+
+### Run Pig
+
+Example:
+
+```bash
+pig category_count.pig
+```
+
+The remaining Pig scripts can be executed in the same way.
 
 ---
 
-## 11. Conclusion
+## 12. Limitations
 
-This project demonstrates how a large YouTube dataset can be stored and processed using a Hadoop-based Big Data environment.
-
-HDFS was used for distributed storage, MapReduce was used for programmatic data processing, and Apache Pig was used for higher-level data analysis. The consistency between MapReduce and Pig results provides confidence in the analytical processing.
-
-The visualizations make the major category-level patterns easier to understand and present.
+- The raw dataset is not stored in the GitHub repository because of its size.
+- The Hadoop environment is demonstrated using a local pseudo-distributed setup.
+- The analysis is primarily category-based.
+- The project does not include real-time streaming analysis.
 
 ---
 
-## 12. Project Evidence
+## 13. Future Improvements
 
-Execution screenshots are available in the [`screenshots`](screenshots/) directory, including HDFS, MapReduce, and Pig execution results.
+Possible future improvements include:
 
-The project source code, scripts, JAR files, commands, and result evidence are organized inside this repository.
+- Add Hive-based analysis.
+- Add Spark-based processing.
+- Implement more advanced statistical analysis.
+- Analyze relationships between views, ratings, comments, and video length.
+- Build an interactive dashboard.
+- Use a multi-node Hadoop cluster for larger-scale distributed processing.
+- Add automated performance benchmarking between MapReduce, Pig, and Spark.
 
+---
+
+## 14. Conclusion
+
+This project demonstrates a complete Big Data Analytics workflow using **HDFS, Java MapReduce, and Apache Pig**. The dataset containing **749,361 YouTube records** was successfully stored and processed, and equivalent analytical results were obtained using both MapReduce and Pig.
+
+The analysis shows that **Music** has the highest number of videos and the highest total views, while **Film & Animation** has the highest average rating. The project also demonstrates how higher-level tools such as Pig can simplify data-flow analysis compared with implementing the same operations directly in Java MapReduce.
+
+---
+
+## Repository
+
+**GitHub:** https://github.com/Imtiaz-1132/BDAL_Final_Project
