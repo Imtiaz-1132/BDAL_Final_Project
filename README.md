@@ -198,15 +198,15 @@ The total record count produced by Pig was:
 
 ### Video Count by Category
 
-![Video Count by Category](screenshots/category_video_count.png)
+![Video Count by Category](screenshots/visualizations/category_video_count.png)
 
 ### Total Views by Category
 
-![Total Views by Category](screenshots/category_total_views.png)
+![Total Views by Category](screenshots/visualizations/category_total_views.png)
 
 ### Average Rating by Category
 
-![Average Rating by Category](screenshots/category_average_rating.png)
+![Average Rating by Category](screenshots/visualizations/category_average_rating.png)
 
 ---
 
@@ -278,3 +278,4 @@ The visualizations make the major category-level patterns easier to understand a
 Execution screenshots are available in the [`screenshots`](screenshots/) directory, including HDFS, MapReduce, and Pig execution results.
 
 The project source code, scripts, JAR files, commands, and result evidence are organized inside this repository.
+
