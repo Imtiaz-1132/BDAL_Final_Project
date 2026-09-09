@@ -1,0 +1,51 @@
+BDAL Final Project - HDFS Commands
+
+Hadoop Version:
+Hadoop 3.2.4
+
+Java Version:
+Java 1.8.0_411
+
+Project HDFS Directory:
+/bda_final_project
+
+1. Create project directories:
+hdfs dfs -mkdir -p /bda_final_project/input
+hdfs dfs -mkdir -p /bda_final_project/output
+
+2. Upload dataset:
+hdfs dfs -put C:\bdalfinal\bigdataset\0.txt /bda_final_project/input/
+hdfs dfs -put C:\bdalfinal\bigdataset\1.txt /bda_final_project/input/
+hdfs dfs -put C:\bdalfinal\bigdataset\2.txt /bda_final_project/input/
+hdfs dfs -put C:\bdalfinal\bigdataset\3.txt /bda_final_project/input/
+hdfs dfs -put C:\bdalfinal\bigdataset\4.txt /bda_final_project/input/
+
+3. Check uploaded files:
+hdfs dfs -ls -h /bda_final_project/input
+
+4. Check HDFS storage:
+hdfs dfs -du -h /bda_final_project/input
+
+5. Check blocks and health:
+hdfs fsck /bda_final_project/input -files -blocks -locations
+
+6. Check DataNode report:
+hdfs dfsadmin -report
+
+7. Verify record count:
+hdfs dfs -cat /bda_final_project/input/*.txt | find /c /v ""
+
+Dataset:
+5 text files
+Total records: 749,361
+
+HDFS Input:
+5 files
+Total HDFS blocks: 6
+Replication factor: 1
+Missing blocks: 0
+Corrupt blocks: 0
+Under-replicated blocks: 0
+
+Status:
+HDFS input successfully uploaded and verified.

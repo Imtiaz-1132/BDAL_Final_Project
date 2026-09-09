@@ -1,0 +1,20 @@
+# Raw dataset
+*.txt
+
+# Hadoop generated files
+*.crc
+tmp/
+logs/
+
+# Java compiled files
+*.class
+classes/
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+
+# OS files
+Thumbs.db
+.DS_Store!hdfs/commands.txt 
